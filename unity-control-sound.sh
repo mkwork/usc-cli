@@ -24,6 +24,7 @@ UCS_INTERESTED_PLAYERS=`dconf read \
 UCS_PREFFERED_PLAYERS=`dconf read /com/canonical/indicator/sound/preferred-media-players \
     | sed  -e "s:[],'\[]::g"`
 
+
 mkdir -p $UCS_CACHE
 touch $UCS_CURRENT_PLAYER_FILE
 UCS_CURRENT_PLAYER=`cat $UCS_CURRENT_PLAYER_FILE`
@@ -147,8 +148,41 @@ function show-current-player {
     notify-send "Players:" "$players" $icon -t 1
 }
 
+function get-current-track-description {
+    gdbus call --session --dest com.canonical.indicator.sound --object-path \
+ /com/canonical/indicator/sound --method org.gtk.Actions.Describe $1 
+ }
+
+function replace-html-escapes {
+    echo "'"$1"'" | perl -MHTML::Entities -le \
+    'while(<>) {print decode_entities($_);}' \
+    | sed -e "s/^'//" -e "s/'$//"
+
+}
+
+function parse-description {
+    description_part_regexp="'$2': <'.*?'>"
+    echo "$1" | grep -oP "$description_part_regexp" \
+        | grep -oP "<'.*'>" | sed -e "s/^<'//" -e "s/'>$//"
+}
+
+function show-current-track {
+    description=`get-current-track-description $UCS_CURRENT_PLAYER`
+    title=`replace-html-escapes "$(parse-description "$description" title)"`
+    artist=`replace-html-escapes "$(parse-description "$description" artist)"`
+    album=`replace-html-escapes "$(parse-description "$description" album)"`
+    art_url=`parse-description "$description" art-url`
+
+    echo "Title: $title"
+    echo "Artist: $artist"
+    echo "Album: $album"
+    echo "Art url: $art_url"
+    
+    notify-send "$title" "$album\n$artist"
+}
+
 function show-usage {
-    echo ' This script was introduced to manipulate ubuntus unity component 
+    echo ' This script was introduced to manipulate on ubuntus unity component 
  known as com.canonical.indicator.sound 
  ----------------------------------------------------------------------------
  Usage:
@@ -160,6 +194,7 @@ function show-usage {
  next-player - switch current player to next 
  previous-player - switch current player to previous 
  show - shows current player 
+ show-track - shows currently playing track information
  help - shows this help message'
 }
 
@@ -185,6 +220,9 @@ case $1 in
         ;;
     show)
         show-current-player
+        ;;
+    show-track)
+        show-current-track
         ;;
     help)
         show-usage
