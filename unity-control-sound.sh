@@ -144,7 +144,7 @@ function show-current-player {
     fi
 
     echo Icon is "$icon"
-    notify-send 'Players:' $players -t 1 -u LOW  $icon 
+    notify-send "Players:" "$players" $icon -t 1
 }
 
 function show-usage {
