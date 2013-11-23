@@ -1,0 +1,33 @@
+gdbus call --session --dest org.mpris.MediaPlayer2.vkcom --object-path /org/mpris/MediaPlayer2 --method org.mpris.MediaPlayer2.Player.PlayPause
+gdbus call --session --dest org.mpris.MediaPlayer2.rhythmbox --object-path /org/mpris/MediaPlayer2 --method org.mpris.MediaPlayer2.Player.PlayPause
+gsettings get com.canonical.indicator.sound interested-media-players
+dconf read /com/canonical/indicator/sound/interested-media-players
+dconf read /com/canonical/indicator/sound/interested-media-players | sed  -e "s:[],'\[]::g" -e "s:\s:\n:g"
+dconf read /com/canonical/indicator/sound/preferred-media-players | sed  -e "s:[],'\[]::g" -e "s:\s:\n:g"
+gdbus call --session --dest com.canonical.indicator.sound --object-path /com/canonical/indicator/sound --method org.gtk.Actions.List
+gdbus call --session --dest com.canonical.indicator.sound --object-path /com/canonical/indicator/sound --method org.gtk.Actions.Activate 'play.vkcomvkcom.desktop' [] {}
+gdbus call --session --dest com.canonical.indicator.sound --object-path /com/canonical/indicator/sound --method org.gtk.Actions.Describe vkcomvkcom.desktop
+
+gdbus call --session --dest org.mpris.MediaPlayer2.vkcom --object-path /org/mpris/MediaPlayer2 --method org.freedesktop.DBus.Properties.Get org.mpris.MediaPlayer2.Player Metadata
+
+notify-send ' ' 'a\nb\nc\n'
+.local/share/applications/
+
+sudo apt-get install recode
+perl -MHTML::Entities -le 'while(<>) {print decode_entities($_);}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

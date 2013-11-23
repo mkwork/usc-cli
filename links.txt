@@ -1,0 +1,12 @@
+https://unity.ubuntu.com/
+https://unity.ubuntu.com/getinvolved/
+https://unity.ubuntu.com/getinvolved/development/unity/
+https://unity.ubuntu.com/getinvolved/development/common-components/
+https://unity.ubuntu.com/getinvolved/development/common-components/#sound-menu
+http://ru.wikipedia.org/wiki/D-Bus
+http://askubuntu.com/a/186311
+http://askubuntu.com/questions/181508/how-can-i-add-a-custom-item-to-the-sound-indicator-and-make-it-clickable-more-t
+http://dbus.freedesktop.org/doc/dbus-monitor.1.html
+http://www.grymoire.com/Unix/Sed.html
+http://lmgtfy.com/?q=gdbus+%22org.gtk.Actions.Activate%22
+http://askubuntu.com/questions/128474/how-to-customize-on-screen-notifications
