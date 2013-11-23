@@ -164,10 +164,6 @@ function show-usage {
 }
 
 initialize-current-player
-if [ -z $1 ];
-then
-    show-usage
-fi
 
 case $1 in
     play)
