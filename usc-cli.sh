@@ -59,6 +59,7 @@ function player-next {
     then
         UCS_CURRENT_PLAYER=$first_player
     fi
+    echo $UCS_CURRENT_PLAYER > $UCS_CURRENT_PLAYER_FILE
 }
 
 
@@ -81,6 +82,7 @@ function player-previous {
     then
         UCS_CURRENT_PLAYER=$previous_player
     fi
+    echo $UCS_CURRENT_PLAYER > $UCS_CURRENT_PLAYER_FILE
 }
 
 function player-action {
@@ -206,7 +208,7 @@ function show-current-track {
         notify_body="$artist\n"
     fi
 
-    notify-send "$notify_tittle" "$notify_body" -i "$notify_icon"
+    notify-send "$notify_tittle" "$notify_body" -i "$notify_icon" -t 1200
 }
 
 function show-usage {
@@ -240,11 +242,9 @@ case $1 in
         ;;
     next-player)
         player-next
-        show-current-player
         ;;
     previous-player)
         player-previous
-        show-current-player
         ;;
     show)
         show-current-player
@@ -262,4 +262,3 @@ case $1 in
         ;;
 
 esac
-echo $UCS_CURRENT_PLAYER > $UCS_CURRENT_PLAYER_FILE
