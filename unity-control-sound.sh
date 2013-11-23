@@ -168,6 +168,9 @@ function parse-description {
 
 function show-current-track {
     description=`get-current-track-description $UCS_CURRENT_PLAYER`
+    echo $description
+
+    state=`parse-description "$description" state`
     title=`replace-html-escapes "$(parse-description "$description" title)"`
     artist=`replace-html-escapes "$(parse-description "$description" artist)"`
     album=`replace-html-escapes "$(parse-description "$description" album)"`
@@ -177,8 +180,33 @@ function show-current-track {
     echo "Artist: $artist"
     echo "Album: $album"
     echo "Art url: $art_url"
-    
-    notify-send "$title" "$album\n$artist"
+
+    art_url_local_path=$(echo "$art_url" | perl -MURI::URL -le 'while(<>){$url=new URI::URL "$_";print $url->local_path}')
+    if [ -f "$art_url_local_path" ];
+    then
+        notify_icon=$art_url_local_path
+    else
+        notify_icon=$(current-player-icon)
+    fi
+
+    if [ -z "$title" ];
+    then
+        notify_tittle="Now $(echo $state | tr [:upper:] [:lower:]):"
+    else
+        notify_tittle="$title"
+    fi
+
+    if [ ! -z "$album" ];
+    then
+        notify_body="$album\n"
+    fi
+
+    if [ ! -z "$artist" ];
+    then
+        notify_body="$artist\n"
+    fi
+
+    notify-send "$notify_tittle" "$notify_body" -i "$notify_icon"
 }
 
 function show-usage {
