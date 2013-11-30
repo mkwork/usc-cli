@@ -147,7 +147,7 @@ function show-current-player {
     fi
 
     echo Icon is "$icon"
-    notify-send "Players:" "$players" $icon -t 1
+    notify-send "Players:" "$players" $icon -t 900
 }
 
 function get-current-track-description {
@@ -208,7 +208,7 @@ function show-current-track {
         notify_body="$artist\n"
     fi
 
-    notify-send "$notify_tittle" "$notify_body" -i "$notify_icon" -t 1200
+    notify-send "$notify_tittle" "$notify_body" -i "$notify_icon" -t 2200
 }
 
 function show-usage {
